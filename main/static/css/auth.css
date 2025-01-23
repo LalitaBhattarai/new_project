@@ -1,0 +1,123 @@
+body {
+  background: linear-gradient(135deg, #6C63FF, #C084FC);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+.main {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+}
+
+h3 {
+  font-weight: bold;
+  color: #6C63FF;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #6C63FF;
+  box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
+}
+
+.button-submit {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #6C63FF, #C084FC);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.button-submit:hover {
+  background: linear-gradient(135deg, #6C63FF, #8A56FF);
+  transform: scale(1.02);
+}
+
+.google, .apple {
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.google {
+  background-color: #4285f4;
+  color: white;
+}
+
+.google:hover {
+  background-color: #3367d6;
+}
+
+.apple {
+  background-color: #000;
+  color: white;
+}
+
+.apple:hover {
+  background-color: #333;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6C63FF;
+}
+
+.toggle-icon:hover {
+  color: #C084FC;
+}
+
+.line {
+  text-align: center;
+  margin: 20px 0;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.cross {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #aaa;
+}
+
+.cross:hover {
+  color: red;
+}
+
+.span {
+  color: #6C63FF;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.span:hover {
+  text-decoration: underline;
+}

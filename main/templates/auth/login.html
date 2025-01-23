@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6C63FF, #C084FC);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'aerial', Arial;
+        }
+        .main {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        h3 {
+            font-weight: bold;
+            color: #6C63FF;
+        }
+        .input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        .input:focus {
+            outline: none;
+            border-color: #6C63FF;
+            box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
+        }
+        .button-submit {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #6C63FF, #C084FC);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .button-submit:hover {
+            background: linear-gradient(135deg, #6C63FF, #8A56FF);
+            transform: scale(1.02);
+        }
+        .google, .apple {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .google {
+            background-color: #4285f4;
+            color: white;
+        }
+        .google:hover {
+            background-color: #3367d6;
+        }
+        .apple {
+            background-color: #000;
+            color: white;
+        }
+        .apple:hover {
+            background-color: #333;
+        }
+        .toggle-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6C63FF;
+        }
+        .toggle-icon:hover {
+            color: #C084FC;
+        }
+        .line {
+            text-align: center;
+            margin: 20px 0;
+            color: #aaa;
+            font-size: 14px;
+        }
+        .cross {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #aaa;
+        }
+        .cross:hover {
+            color: red;
+        }
+        .span {
+            color: #6C63FF;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .span:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="main position-relative">
+    <a href="{% url 'index' %}" class="cross">
+        <i class="fa-solid fa-xmark"></i>
+    </a>
+    <form method="POST" action="{% url 'log_in' %}" class="form">
+        {% csrf_token %}
+        <input type="hidden" value="{{ next }}" name="next">
+        <div class="mb-3 text-center">
+            <h3>Login</h3>
+        </div>
+        <div class="inputForm position-relative">
+            <input id="username" class="input" name="username" type="text" placeholder="Enter your username">
+        </div>
+        <div class="inputForm position-relative">
+            <input id="password" placeholder="Enter your Password" class="input" type="password" name="password">
+            <span id="togglePassword" class="toggle-icon">
+                <i class="fa fa-eye"></i>
+            </span>
+        </div>
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+                <input type="checkbox" name="remember_me">
+                <label for="remember_me">Remember me</label>
+            </div>
+            <a href="{% url 'password_reset' %}" class="span">Forgot password?</a>
+        </div>
+        <button type="submit" class="button-submit">Sign In</button>
+        <p class="text-center mt-3">Don't have an account? <a href="{% url 'register' %}" class="span">Sign Up</a></p>
+        <p class="line">Or sign in with</p>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+            <button type="button" class="btn google">
+                <i class="fa-brands fa-google me-2"></i> Sign in with Google
+            </button>
+        </a>
+        <a href="{% url 'social:begin' 'apple-id' %}">
+            <button type="button" class="btn apple">
+                <i class="fa-brands fa-apple me-2"></i> Sign in with Apple
+            </button>
+        </a>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.innerHTML = 
+                type === 'password' 
+                ? '<i class="fa fa-eye"></i>' 
+                : '<i class="fa fa-eye-slash"></i>';
+        });
+    });
+</script>
+{% if messages %}
+{% for message in messages %}
+<script>
+    alertify.set('notifier','position', 'top-right');
+    alertify.success('{{ message }}');
+</script>
+{% endfor %}
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
